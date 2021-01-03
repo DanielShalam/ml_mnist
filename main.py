@@ -105,15 +105,12 @@ if __name__ == '__main__':
         temp_sum += e_value
         k += 1
 
-    print(f"\nThe chosen k is: {k}, which is {str(temp_sum / e_sum * 100)[:2]}% of the Energy")
+    print(f"{CGREEN}\nThe chosen k is: {k}, which is {str(temp_sum / e_sum * 100)[:2]}% of the Energy.{CEND}")
 
     #### step 7 ####
     # KNN
-    # PCA to k dimensions for each feature vector
-    # TODO: delete those rows
-    # new_train_images = new_train_images[:5000]
-    # train_labels = train_labels[:5000]
 
+    # PCA to k dimensions for each feature vector
     E = np.reshape(v[:][0:k], [k, new_train_images.shape[1]])
     y = np.matmul(E, Z.transpose())
     y = y.transpose()
@@ -127,7 +124,7 @@ if __name__ == '__main__':
     train_labels = train_labels[val_idx:]
 
     # perform knn
-    k = 10
+    k = 5
     classifications = []
     num_threads = 5
     num_samples = len(new_train_images)
@@ -135,6 +132,8 @@ if __name__ == '__main__':
     ranges = [(i * part_duration, (i + 1) * part_duration) for i in range(num_threads)]
 
     import math
+
+    print(f"\nPerform KNN to validation set, K = {k}: ")
     for i in range(num_threads):
         start = math.floor(ranges[i][0])
         end = math.floor(ranges[i][1])
@@ -164,4 +163,4 @@ if __name__ == '__main__':
     for i in range(len(classifications)):
         if classifications[i] == validation_labels[i]: true_count += 1
 
-    print(f"{CGREEN}\nClassification success: {true_count / len(classifications)*100}%{CEND}")
+    print(f"{CGREEN}Classification success: {true_count / len(classifications)*100}%{CEND}")

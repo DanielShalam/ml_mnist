@@ -6,7 +6,7 @@ def performKnnClassification(k, validation_images, train_images, train_labels):
     labels = []
 
     # compute euclidean distance matrix between each image in the validation to each image in the training set
-    dist_matrix = distance_matrix(validation_images, train_images)
+    dist_matrix = computeDistanceMatrix(validation_images, train_images)
 
     # for each row in the distance matrix, we will take the k smallest distances to get the k neighbours
     for row in dist_matrix:
@@ -23,7 +23,7 @@ def getClassification(neighbors_labels):
     return values[ind]
 
 
-def distance_matrix(A, B, squared=False):
+def computeDistanceMatrix(A, B):
     """
     Compute all pairwise distances between vectors in A and B.
 
@@ -56,9 +56,6 @@ def distance_matrix(A, B, squared=False):
     B_dots = (B * B).sum(axis=1) * np.ones(shape=(M, 1))
     D_squared = A_dots + B_dots - 2 * A.dot(B.T)
 
-    if squared == False:
-        zero_mask = np.less(D_squared, 0.0)
-        D_squared[zero_mask] = 0.0
-        return np.sqrt(D_squared)
-
-    return D_squared
+    zero_mask = np.less(D_squared, 0.0)
+    D_squared[zero_mask] = 0.0
+    return np.sqrt(D_squared)
