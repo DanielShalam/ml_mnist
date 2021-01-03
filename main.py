@@ -28,11 +28,60 @@ class myThread(threading.Thread):
         return
 
 
+def multiThreadedKNN(x, Y, x_labels, y_labels, k):
+    threads = []
+    classifications = []
+    num_samples = len(Y)
+    part_duration = num_samples / num_threads
+    ranges = [(i * part_duration, (i + 1) * part_duration) for i in range(num_threads)]
+
+    import math
+
+    for i in range(num_threads):
+        start = math.floor(ranges[i][0])
+        end = math.floor(ranges[i][1])
+        if i == num_threads: end += 1
+        thread = myThread(i, k, x, Y[start:end], y_labels[start:end])  # Create new threads
+        thread.start()  # Start new Thread
+        threads.append(thread)  # Add threads to thread list
+
+    # Wait for all threads to complete
+    for t in threads:
+        t.join()
+
+    for i in range(len(x)):
+        distances = []
+        labels = []
+        for t in threads:  # for each thread we will merge its neighbours with all the rest
+            distances.extend(t.distances[i])
+            labels.extend(t.labels[i])
+
+        # getting the k best neighbours from all threads
+        min_indices = np.argpartition(distances, k)[:k]
+        # assign k best labels
+        final_labels = [labels[j] for j in min_indices]
+        classifications.append(KNN.getClassification(final_labels))
+
+    true_count = 0
+    if len(classifications) != len(x_labels):
+        print("Length of classification list not equal to the number of labels.")
+        return 0
+
+    for i in range(len(classifications)):
+        if classifications[i] == x_labels[i]: true_count += 1
+
+    accuracy = true_count / len(classifications) * 100
+    print(f"{CGREEN}Classification accuracy: {accuracy}%{CEND}")
+
+    return accuracy
+
+
 CEND = '\33[0m'
 CRED = '\33[31m'
 CGREEN = '\33[32m'
 
 threads = []
+num_threads = 5
 
 if __name__ == '__main__':
     plot_centroids = False
@@ -130,10 +179,6 @@ if __name__ == '__main__':
     k_list = [1, 3, 5, 7, 9, 11, 13, 15, 17, 30]
     best_k = [-1, -1]  # accuracy, k
     accuracy_list = []
-    num_threads = 5
-    num_samples = len(new_train_images)
-    part_duration = num_samples / num_threads
-    ranges = [(i * part_duration, (i + 1) * part_duration) for i in range(num_threads)]
 
     for k_idx, k in enumerate(k_list):
         threads = []
@@ -141,44 +186,12 @@ if __name__ == '__main__':
         import math
 
         print(f"\nPerform KNN to validation set, K = {k}: ")
-        for i in range(num_threads):
-            start = math.floor(ranges[i][0])
-            end = math.floor(ranges[i][1])
-            if i == num_threads: end += 1
-            thread = myThread(i, k, validation_images, new_train_images[start:end],
-                              t_labels[start:end])  # Create new threads
-            threads.append(thread)  # Add threads to thread list
-            thread.start()  # Start new Thread
-
-        # Wait for all threads to complete
-        for t in threads:
-            t.join()
-
-        for i in range(len(validation_images)):
-            distances = []
-            labels = []
-            for t in threads:  # for each thread we will merge its neighbours with all the rest
-                distances.extend(t.distances[i])
-                labels.extend(t.labels[i])
-
-            # getting the k best neighbours from all threads
-            min_indices = np.argpartition(distances, k)[:k]
-            # assign k best labels
-            final_labels = [labels[j] for j in min_indices]
-            classifications.append(KNN.getClassification(final_labels))
-
-        true_count = 0
-        for i in range(len(classifications)):
-            if classifications[i] == validation_labels[i]: true_count += 1
-
-        accuracy = true_count / len(classifications) * 100
+        accuracy = multiThreadedKNN(x=validation_images, Y=new_train_images, x_labels=validation_labels, y_labels=t_labels, k=k)
 
         accuracy_list.append(accuracy)
         if best_k[0] < accuracy:
             best_k[0] = accuracy
             best_k[1] = k
-
-        print(f"{CGREEN}Classification accuracy: {accuracy}%{CEND}")
 
     plt.plot(k_list, accuracy_list)
     plt.show()
@@ -188,50 +201,11 @@ if __name__ == '__main__':
     # PCA to n dimensions for each feature vector
     # TODO should we use PCA now only for the test set
     train_set = y
-    Z = new_test_images - mu   # subtract the mean of the training set
+    Z = new_test_images - mu  # subtract the mean of the training set
     E = np.reshape(v[:][0:n], [n, new_test_images.shape[1]])
     y = np.matmul(E, Z.transpose())
     y = y.transpose()
 
     k = best_k[1]
-    threads = []
-    classifications = []
-    num_samples = len(train_set)
-    part_duration = num_samples / num_threads
-    ranges = [(i * part_duration, (i + 1) * part_duration) for i in range(num_threads)]
-
-    import math
-
     print(f"\nPerform KNN to test set, K = {k}: ")
-    for i in range(num_threads):
-        start = math.floor(ranges[i][0])
-        end = math.floor(ranges[i][1])
-        if i == num_threads: end += 1
-        thread = myThread(i, k, y, train_set[start:end], train_labels[start:end])  # Create new threads
-        thread.start()  # Start new Thread
-        threads.append(thread)  # Add threads to thread list
-
-    # Wait for all threads to complete
-    for t in threads:
-        t.join()
-
-    for i in range(len(test_images)):
-        distances = []
-        labels = []
-        for t in threads:  # for each thread we will merge its neighbours with all the rest
-            distances.extend(t.distances[i])
-            labels.extend(t.labels[i])
-
-        # getting the k best neighbours from all threads
-        min_indices = np.argpartition(distances, k)[:k]
-        # assign k best labels
-        final_labels = [labels[j] for j in min_indices]
-        classifications.append(KNN.getClassification(final_labels))
-
-    true_count = 0
-    for i in range(len(classifications)):
-        if classifications[i] == test_labels[i]: true_count += 1
-
-    accuracy = true_count / len(classifications) * 100
-
-    print(f"{CGREEN}Classification accuracy: {accuracy}%{CEND}")
+    multiThreadedKNN(x=y, Y=train_set, x_labels=test_labels, y_labels=train_labels, k=k)
