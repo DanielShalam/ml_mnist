@@ -154,8 +154,10 @@ if __name__ == '__main__':
             distances.extend(t.distances[i])
             labels.extend(t.labels[i])
 
-        indices = (np.asarray(distances)).argsort()[:k]    # getting final array
-        final_labels = [labels[j] for j in indices]
+        # getting the k best neighbours from all threads
+        min_indices = np.argpartition(distances, k)[:k]
+        # assign k best labels
+        final_labels = [labels[j] for j in min_indices]
         classifications.append(KNN.getClassification(final_labels))
 
     true_count = 0
