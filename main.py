@@ -12,18 +12,20 @@ import KNN
 
 
 class myThread(threading.Thread):
-    def __init__(self, threadID, k, val, train, labels):
+    def __init__(self, threadID, curr_k, val, train, t_labels):
         threading.Thread.__init__(self)
         self.threadID = threadID
-        self.k = k
+        self.k = curr_k
         self.val = val
         self.train = train
-        self.t_labels = labels
+        self.t_labels = t_labels
         self.distances = None
         self.labels = None
+        return
 
     def run(self):
         self.distances, self.labels = KNN.performKnnClassification(k, self.val, self.train, self.t_labels)
+        return
 
 
 CEND = '\33[0m'
@@ -65,7 +67,7 @@ if __name__ == '__main__':
 
     ########### PCA ###########
     k = 2
-    d, v, Z = PCA.getEigen(new_train_images)
+    d, v, Z, mu = PCA.getEigen(new_train_images)
 
     E = np.reshape(v[:][0:k], [k, new_train_images.shape[1]])
 
@@ -109,47 +111,114 @@ if __name__ == '__main__':
 
     #### step 7 ####
     # KNN
-
+    n = k
     # PCA to k dimensions for each feature vector
-    E = np.reshape(v[:][0:k], [k, new_train_images.shape[1]])
+    # TODO should we do PCA separately to validation set
+    E = np.reshape(v[:][0:n], [n, new_train_images.shape[1]])
     y = np.matmul(E, Z.transpose())
     y = y.transpose()
 
     # split train-validation
     validation_pct = 0.15
     val_idx = int(y.shape[0] * validation_pct)
-    validation_images = y[:val_idx]         # validation set
+    validation_images = y[:val_idx]  # validation set
     validation_labels = train_labels[:val_idx]
-    new_train_images = y[val_idx:]          # train set without validation set
-    train_labels = train_labels[val_idx:]
+    new_train_images = y[val_idx:]  # train set without validation set
+    t_labels = train_labels[val_idx:]
 
     # perform knn
-    k = 5
-    classifications = []
+    k_list = [1, 3, 5, 7, 9, 11, 13, 15, 17, 30]
+    best_k = [-1, -1]  # accuracy, k
+    accuracy_list = []
     num_threads = 5
     num_samples = len(new_train_images)
     part_duration = num_samples / num_threads
     ranges = [(i * part_duration, (i + 1) * part_duration) for i in range(num_threads)]
 
+    for k_idx, k in enumerate(k_list):
+        threads = []
+        classifications = []
+        import math
+
+        print(f"\nPerform KNN to validation set, K = {k}: ")
+        for i in range(num_threads):
+            start = math.floor(ranges[i][0])
+            end = math.floor(ranges[i][1])
+            if i == num_threads: end += 1
+            thread = myThread(i, k, validation_images, new_train_images[start:end],
+                              t_labels[start:end])  # Create new threads
+            threads.append(thread)  # Add threads to thread list
+            thread.start()  # Start new Thread
+
+        # Wait for all threads to complete
+        for t in threads:
+            t.join()
+
+        for i in range(len(validation_images)):
+            distances = []
+            labels = []
+            for t in threads:  # for each thread we will merge its neighbours with all the rest
+                distances.extend(t.distances[i])
+                labels.extend(t.labels[i])
+
+            # getting the k best neighbours from all threads
+            min_indices = np.argpartition(distances, k)[:k]
+            # assign k best labels
+            final_labels = [labels[j] for j in min_indices]
+            classifications.append(KNN.getClassification(final_labels))
+
+        true_count = 0
+        for i in range(len(classifications)):
+            if classifications[i] == validation_labels[i]: true_count += 1
+
+        accuracy = true_count / len(classifications) * 100
+
+        accuracy_list.append(accuracy)
+        if best_k[0] < accuracy:
+            best_k[0] = accuracy
+            best_k[1] = k
+
+        print(f"{CGREEN}Classification accuracy: {accuracy}%{CEND}")
+
+    plt.plot(k_list, accuracy_list)
+    plt.show()
+
+    ###### perform KNN to test set using the best k ######
+    #### perform PCA to test set #####
+    # PCA to n dimensions for each feature vector
+    # TODO should we use PCA now only for the test set
+    train_set = y
+    Z = new_test_images - mu   # subtract the mean of the training set
+    E = np.reshape(v[:][0:n], [n, new_test_images.shape[1]])
+    y = np.matmul(E, Z.transpose())
+    y = y.transpose()
+
+    k = best_k[1]
+    threads = []
+    classifications = []
+    num_samples = len(train_set)
+    part_duration = num_samples / num_threads
+    ranges = [(i * part_duration, (i + 1) * part_duration) for i in range(num_threads)]
+
     import math
 
-    print(f"\nPerform KNN to validation set, K = {k}: ")
+    print(f"\nPerform KNN to test set, K = {k}: ")
     for i in range(num_threads):
         start = math.floor(ranges[i][0])
         end = math.floor(ranges[i][1])
         if i == num_threads: end += 1
-        thread = myThread(i, k, validation_images, new_train_images[start:end], train_labels[start:end]) # Create new threads
-        thread.start()          # Start new Thread
+        thread = myThread(i, k, y, train_set[start:end], train_labels[start:end])  # Create new threads
+        thread.start()  # Start new Thread
         threads.append(thread)  # Add threads to thread list
 
     # Wait for all threads to complete
     for t in threads:
         t.join()
 
-    for i in range(len(validation_images)):
+    for i in range(len(test_images)):
         distances = []
         labels = []
-        for t in threads:   # for each thread we will merge its neighbours with all the rest
+        for t in threads:  # for each thread we will merge its neighbours with all the rest
             distances.extend(t.distances[i])
             labels.extend(t.labels[i])
 
@@ -161,6 +230,8 @@ if __name__ == '__main__':
 
     true_count = 0
     for i in range(len(classifications)):
-        if classifications[i] == validation_labels[i]: true_count += 1
+        if classifications[i] == test_labels[i]: true_count += 1
 
-    print(f"{CGREEN}Classification success: {true_count / len(classifications)*100}%{CEND}")
+    accuracy = true_count / len(classifications) * 100
+
+    print(f"{CGREEN}Classification accuracy: {accuracy}%{CEND}")

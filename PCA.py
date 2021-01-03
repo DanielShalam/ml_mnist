@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def getEigen(images):
     # compute mean
     mu = np.mean(images, axis=0)
@@ -11,7 +12,7 @@ def getEigen(images):
     # compute sorted eigen values and vectors
     d, v = np.linalg.eig(S)
 
-    return d, v, Z
+    return d, v, Z, mu
 
 
 def plotPCA(y):
