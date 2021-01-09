@@ -5,7 +5,6 @@ from sklearn.svm import SVC
 from sklearn.datasets import make_moons, make_circles, make_classification
 from sklearn.model_selection import train_test_split
 
-
 def make_meshgrid(x, y, mrg, h=.02):
     x_min, x_max = x.min() - mrg, x.max() + mrg
     y_min, y_max = y.min() - mrg, y.max() + mrg
@@ -65,12 +64,11 @@ def run_classifier(X_all, y_all, ax, krnl, C_val, mrg=1, gamma=1):
                linestyles=['--', '-', '--'])
     ax.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=30, edgecolors='k')
     ax.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1], s=80,
-               facecolors='none', zorder=10, edgecolors='k')
+               facecolors='none', zorder=10, edgecolors='brown')
 
     # test points
     Xt0, Xt1 = X_test[:, 0], X_test[:, 1]
     ax.scatter(Xt0, Xt1, c=y_test, cmap=plt.cm.coolwarm, s=40, alpha=0.5, edgecolors='k')
-
     #print test accuracy
     print(clf.score(X_test, y_test))
 
@@ -118,35 +116,31 @@ for ds_cnt, ds in enumerate(datasets):
 # Classifier for the data in the first column
 X, y = datasets[0]
 ax = plt.subplot(2, len(datasets), i)
-plt.show()
-run_classifier(X, y, ax, krnl='linear', C_val=1, mrg=1, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
-plt.show()
-plt.close()
+# plt.show()
+run_classifier(X, y, ax, krnl='linear', C_val=2, mrg=2, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
+# plt.show()
 i += 1
 
 # Classifier for the data in the second column
 X, y = datasets[1]
 ax = plt.subplot(2, len(datasets), i)
-plt.show()
-run_classifier(X, y, ax, krnl='rbf', C_val=1, mrg=1, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
-plt.show()
-plt.close()
-
+# plt.show()
+run_classifier(X, y, ax, krnl='rbf', C_val=10, mrg=2, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
+# plt.show()
 i += 1
 
 # Classifier for the data in the third column
 X, y = datasets[2]
 ax = plt.subplot(2, len(datasets), i)
-plt.show()
-run_classifier(X, y, ax, krnl='rbf', C_val=1, mrg=1, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
-plt.show()
+# plt.show()
+run_classifier(X, y, ax, krnl='rbf', C_val=20, mrg=2, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
+# plt.show()
 i += 1
 
 # Classifier for the data in the last column
 X, y = datasets[3]
 ax = plt.subplot(2, len(datasets), i)
+# plt.show()
+run_classifier(X, y, ax, krnl='poly', C_val=5, mrg=2, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
 plt.show()
-run_classifier(X, y, ax, krnl='rbf', C_val=1, mrg=3, gamma=1)   #choose krnl from {'linear', 'poly', 'rbf'}, set the value of C and gamman (for 'rbf').
 
-
-plt.show()

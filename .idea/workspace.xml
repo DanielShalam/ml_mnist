@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="109c9cf6-1bcf-458a-9fa1-6c12774c0744" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/hw2_python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/hw2_python.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SVM/HA_SVM_student.py" beforeDir="false" afterPath="$PROJECT_DIR$/SVM/HA_SVM_student.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +33,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/SVM/HA_SVM_student.py" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="PyScientificConfigurable" />
   </component>
   <component name="RunManager" selected="Python.main">
     <configuration name="SVM" type="PythonConfigurationType" factoryName="Python">
@@ -78,6 +81,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="compare_files" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="hw2_python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\dani3\AppData\Local\Programs\Python\Python37\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop/Computer science/Semester F/Compilers" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/Computer science/Semester F/Compilers/compare_files.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="hw2_python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -101,6 +126,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.compare_files" />
       <item itemvalue="Python.SVM" />
       <item itemvalue="Python.main" />
     </list>
@@ -118,7 +144,14 @@
       <workItem from="1609243135528" duration="11570000" />
       <workItem from="1609404670050" duration="7281000" />
       <workItem from="1609415440616" duration="8162000" />
-      <workItem from="1609685033773" duration="14154000" />
+      <workItem from="1609685033773" duration="16394000" />
+      <workItem from="1609769036099" duration="719000" />
+      <workItem from="1609866428831" duration="2511000" />
+      <workItem from="1609943136448" duration="29000" />
+      <workItem from="1610119334846" duration="3942000" />
+      <workItem from="1610191796702" duration="325000" />
+      <workItem from="1610202684260" duration="696000" />
+      <workItem from="1610228193739" duration="3403000" />
     </task>
     <servers />
   </component>
@@ -126,70 +159,71 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="188" y="248" width="1092" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609710366555">
+    <state x="188" y="248" width="1092" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610120226875">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="188" y="248" width="1092" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1609710366555" />
-    <state width="1237" height="466" key="DebuggerActiveHint" timestamp="1609415863607">
+    <state x="188" y="248" width="1092" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1610120226875" />
+    <state width="1437" height="165" key="DebuggerActiveHint" timestamp="1610230021525">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1237" height="466" key="DebuggerActiveHint/0.0.1858.1080@0.0.1858.1080" timestamp="1609415863607" />
+    <state width="1437" height="165" key="DebuggerActiveHint/0.0.1858.1080@0.0.1858.1080" timestamp="1610230021525" />
     <state x="468" y="363" key="EnvironmentVariablesDialog" timestamp="1609709104269">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state x="468" y="363" key="EnvironmentVariablesDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1609709104269" />
-    <state x="709" y="303" key="FileChooserDialogImpl" timestamp="1609707065380">
+    <state x="709" y="303" key="FileChooserDialogImpl" timestamp="1610203742804">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="709" y="303" key="FileChooserDialogImpl/0.0.1858.1080@0.0.1858.1080" timestamp="1609707065380" />
-    <state width="1815" height="339" key="GridCell.Tab.0.bottom" timestamp="1609711235333">
+    <state x="709" y="303" key="FileChooserDialogImpl/0.0.1858.1080@0.0.1858.1080" timestamp="1610203742804" />
+    <state width="1815" height="230" key="GridCell.Tab.0.bottom" timestamp="1610231520849">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="339" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1609711235333" />
-    <state width="1815" height="339" key="GridCell.Tab.0.center" timestamp="1609711235333">
+    <state width="1815" height="230" key="GridCell.Tab.0.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520849" />
+    <state width="1815" height="230" key="GridCell.Tab.0.center" timestamp="1610231520848">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="339" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1609711235333" />
-    <state width="1815" height="339" key="GridCell.Tab.0.left" timestamp="1609711235333">
+    <state width="1815" height="230" key="GridCell.Tab.0.center/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520848" />
+    <state width="1815" height="230" key="GridCell.Tab.0.left" timestamp="1610231520848">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="339" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1609711235333" />
-    <state width="1815" height="339" key="GridCell.Tab.0.right" timestamp="1609711235333">
+    <state width="1815" height="230" key="GridCell.Tab.0.left/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520848" />
+    <state width="1815" height="230" key="GridCell.Tab.0.right" timestamp="1610231520849">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="339" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1609711235333" />
-    <state width="1815" height="230" key="GridCell.Tab.1.bottom" timestamp="1609701160477">
+    <state width="1815" height="230" key="GridCell.Tab.0.right/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520849" />
+    <state width="1815" height="230" key="GridCell.Tab.1.bottom" timestamp="1610231520849">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="230" key="GridCell.Tab.1.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1609701160477" />
-    <state width="1815" height="230" key="GridCell.Tab.1.center" timestamp="1609701160477">
+    <state width="1815" height="230" key="GridCell.Tab.1.bottom/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520849" />
+    <state width="1815" height="230" key="GridCell.Tab.1.center" timestamp="1610231520849">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="230" key="GridCell.Tab.1.center/0.0.1858.1080@0.0.1858.1080" timestamp="1609701160477" />
-    <state width="1815" height="230" key="GridCell.Tab.1.left" timestamp="1609701160477">
+    <state width="1815" height="230" key="GridCell.Tab.1.center/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520849" />
+    <state width="1815" height="230" key="GridCell.Tab.1.left" timestamp="1610231520849">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="230" key="GridCell.Tab.1.left/0.0.1858.1080@0.0.1858.1080" timestamp="1609701160477" />
-    <state width="1815" height="230" key="GridCell.Tab.1.right" timestamp="1609701160477">
+    <state width="1815" height="230" key="GridCell.Tab.1.left/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520849" />
+    <state width="1815" height="230" key="GridCell.Tab.1.right" timestamp="1610231520849">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state width="1815" height="230" key="GridCell.Tab.1.right/0.0.1858.1080@0.0.1858.1080" timestamp="1609701160477" />
-    <state x="279" y="259" width="998" height="708" key="SettingsEditor" timestamp="1609709440793">
+    <state width="1815" height="230" key="GridCell.Tab.1.right/0.0.1858.1080@0.0.1858.1080" timestamp="1610231520849" />
+    <state x="279" y="259" width="998" height="708" key="SettingsEditor" timestamp="1610121603175">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="279" y="259" width="998" height="708" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1609709440793" />
+    <state x="279" y="259" width="998" height="708" key="SettingsEditor/0.0.1858.1080@0.0.1858.1080" timestamp="1610121603175" />
     <state width="937" height="548" key="XDebugger.FullValuePopup" timestamp="1609248810562">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
     <state width="937" height="548" key="XDebugger.FullValuePopup/0.0.1858.1080@0.0.1858.1080" timestamp="1609248810562" />
-    <state x="625" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1609415440258">
+    <state x="625" y="364" key="com.intellij.ide.util.TipDialog" timestamp="1610191802987">
       <screen x="0" y="0" width="1858" height="1080" />
     </state>
-    <state x="625" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1609415440258" />
+    <state x="625" y="364" key="com.intellij.ide.util.TipDialog/0.0.1858.1080@0.0.1858.1080" timestamp="1610191802987" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/hw2_python$main.coverage" NAME="main Coverage Results" MODIFIED="1609423132102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/machin_learning_2$SVM.coverage" NAME="SVM Coverage Results" MODIFIED="1609708609342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SVM" />
-    <SUITE FILE_PATH="coverage/machin_learning_2$main.coverage" NAME="main Coverage Results" MODIFIED="1609711235323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/machin_learning_2$compare_files.coverage" NAME="compare_files Coverage Results" MODIFIED="1609870127219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Desktop/Computer science/Semester F/Compilers" />
+    <SUITE FILE_PATH="coverage/machin_learning_2$SVM.coverage" NAME="SVM Coverage Results" MODIFIED="1610122678707" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SVM" />
+    <SUITE FILE_PATH="coverage/machin_learning_2$main.coverage" NAME="main Coverage Results" MODIFIED="1610231520840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

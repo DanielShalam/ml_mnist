@@ -57,9 +57,13 @@ def multiThreadedKNN(x, Y, x_labels, y_labels, k):
             labels.extend(t.labels[i])
 
         # getting the k best neighbours from all threads
-        min_indices = np.argpartition(distances, k)[:k]
         # assign k best labels
-        final_labels = [labels[j] for j in min_indices]
+        if num_threads > 1:
+            min_indices = np.argpartition(distances, k)[:k]
+            final_labels = [labels[j] for j in min_indices]
+        else:
+            final_labels = labels
+
         classifications.append(KNN.getClassification(final_labels))
 
     true_count = 0
@@ -199,7 +203,6 @@ if __name__ == '__main__':
     ###### perform KNN to test set using the best k ######
     #### perform PCA to test set #####
     # PCA to n dimensions for each feature vector
-    # TODO should we use PCA now only for the test set
     train_set = y
     Z = new_test_images - mu  # subtract the mean of the training set
     E = np.reshape(v[:][0:n], [n, new_test_images.shape[1]])
