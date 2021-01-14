@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math
 
 
 def computeCentroids(digits, images, labels, plot_centroids):
@@ -22,23 +23,26 @@ def computeCentroids(digits, images, labels, plot_centroids):
     return centroids
 
 
-def computeDistMatrix(digits, centroids):
+def computeCentroidsDist(digits, centroids):
     """ step3: function to compute the euclidean distance between each pair of digits centroids. """
     max_digit = max(digits) + 1
     dist_matrix = np.zeros((max_digit, max_digit))
+    centroids_array = []
+    for d in digits:
+        centroids_array.append(centroids[d])
 
     for first_digit in digits:
         for sec_digit in digits:
+            if first_digit == sec_digit:
+                dist_matrix[first_digit][first_digit] = 0
 
-            if first_digit >= sec_digit:
-                dist_matrix[first_digit - 1][sec_digit - 1] = dist_matrix[sec_digit - 1][first_digit - 1]
-                continue
-
-            dist_matrix[first_digit - 1][sec_digit - 1] = np.linalg.norm(centroids[first_digit] - centroids[sec_digit])
+            # Euclidean distance
+            dist_matrix[first_digit][sec_digit] = math.sqrt(
+                sum([(a - b) ** 2 for a, b in zip(centroids[first_digit], centroids[sec_digit])]))
 
     from tabulate import tabulate
 
-    headers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    headers = list(centroids.keys())
 
     # tabulate data
     table = tabulate(dist_matrix, headers, showindex=True, tablefmt="fancy_grid")
@@ -89,4 +93,3 @@ def plotCentroids(centroids):
         plt.show()
 
     plt.close()
-

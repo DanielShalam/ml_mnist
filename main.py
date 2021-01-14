@@ -107,7 +107,7 @@ if __name__ == '__main__':
     centroids = utils.computeCentroids(digits, train_images, train_labels, plot_centroids)
 
     #### step 3 ####
-    dist_matrix = utils.computeDistMatrix(digits, centroids)
+    dist_matrix = utils.computeCentroidsDist(digits, centroids)
 
     #### step 4 ####
     variance_vec = utils.computePixelVar(np.concatenate((train_images, test_images), axis=0))

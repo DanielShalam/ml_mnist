@@ -1,12 +1,12 @@
 import numpy as np
 
 
-def performKnnClassification(k, validation_images, train_images, train_labels):
+def performKnnClassification(k, test_images, train_images, train_labels):
     distances = []
     labels = []
 
     # compute euclidean distance matrix between each image in the validation to each image in the training set
-    dist_matrix = computeDistanceMatrix(validation_images, train_images)
+    dist_matrix = computeDistanceMatrix(test_images, train_images)
 
     # for each row in the distance matrix, we will take the k smallest distances to get the k neighbours
     for row in dist_matrix:
@@ -24,28 +24,7 @@ def getClassification(neighbors_labels):
 
 
 def computeDistanceMatrix(A, B):
-    """
-    Compute all pairwise distances between vectors in A and B.
-
-    Parameters
-    ----------
-    A : np.array
-        shape should be (M, K)
-    B : np.array
-        shape should be (N, K)
-
-    Returns
-    -------
-    D : np.array
-        A matrix D of shape (M, N).  Each entry in D i,j represnets the
-        distance between row i in A and row j in B.
-
-    See also
-    --------
-    A more generalized version of the distance matrix is available from
-    scipy (https://www.scipy.org) using scipy.spatial.distance_matrix,
-    which also gives a choice for p-norm.
-    """
+    # Compute all pairwise distances between vectors in A and B.
     M = A.shape[0]
     N = B.shape[0]
 
