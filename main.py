@@ -75,7 +75,7 @@ def multiThreadedKNN(x, Y, x_labels, y_labels, k):
         if classifications[i] == x_labels[i]: true_count += 1
 
     accuracy = true_count / len(classifications) * 100
-    print(f"{CGREEN}Classification accuracy: {accuracy}%{CEND}")
+    print(f"{CGREEN}Classification accuracy: {str(accuracy)[:5]}%{CEND}")
 
     return accuracy
 
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     k = 2
     d, v, Z, mu = PCA.getEigen(new_train_images)
 
-    E = np.reshape(v[:][0:k], [k, new_train_images.shape[1]])
+    E = np.reshape(v[:, :k], [k, new_train_images.shape[1]])
 
     indices = []
     for digit in digits:
@@ -166,19 +166,23 @@ if __name__ == '__main__':
     # KNN
     n = k
     # PCA to k dimensions for each feature vector
-    # TODO should we do PCA separately to validation set
-    E = np.reshape(v[:][0:n], [n, new_train_images.shape[1]])
-    y = np.matmul(E, Z.transpose())
-    y = y.transpose()
 
     # split train-validation
     validation_pct = 0.15
-    val_idx = int(y.shape[0] * validation_pct)
-    validation_images = y[:val_idx]  # validation set
+    val_idx = int(new_train_images.shape[0] * validation_pct)
+    validation_images = new_train_images[:val_idx, :]  # validation set
     validation_labels = train_labels[:val_idx]
-    new_train_images = y[val_idx:]  # train set without validation set
+    temp_train_images = new_train_images[val_idx:, :]  # train set without validation set
     t_labels = train_labels[val_idx:]
 
+    d, v, Z, mu = PCA.getEigen(temp_train_images)
+    E = np.reshape(v[:, :k], [k, temp_train_images.shape[1]])
+    train = np.matmul(E, Z.transpose())
+    Z = validation_images - mu
+    E = np.reshape(v[:, :k], [k, validation_images.shape[1]])
+    validation = np.matmul(E, Z.transpose())
+    train = train.transpose()
+    validation = validation.transpose()
     # perform knn
     k_list = [1, 3, 5, 7, 9, 11, 13, 15, 17, 30]
     best_k = [-1, -1]  # accuracy, k
@@ -187,10 +191,9 @@ if __name__ == '__main__':
     for k_idx, k in enumerate(k_list):
         threads = []
         classifications = []
-        import math
 
         print(f"\nPerform KNN to validation set, K = {k}: ")
-        accuracy = multiThreadedKNN(x=validation_images, Y=new_train_images, x_labels=validation_labels, y_labels=t_labels, k=k)
+        accuracy = multiThreadedKNN(x=validation, Y=train, x_labels=validation_labels, y_labels=t_labels, k=k)
 
         accuracy_list.append(accuracy)
         if best_k[0] < accuracy:
@@ -203,12 +206,15 @@ if __name__ == '__main__':
     ###### perform KNN to test set using the best k ######
     #### perform PCA to test set #####
     # PCA to n dimensions for each feature vector
-    train_set = y
+    d, v, Z, mu = PCA.getEigen(new_train_images)
+    E = np.reshape(v[:, :n], [n, new_train_images.shape[1]])
+    train = np.matmul(E, Z.transpose())
+    train = train.transpose()
     Z = new_test_images - mu  # subtract the mean of the training set
-    E = np.reshape(v[:][0:n], [n, new_test_images.shape[1]])
-    y = np.matmul(E, Z.transpose())
-    y = y.transpose()
+    E = np.reshape(v[:, :n], [n, new_test_images.shape[1]])
+    test = np.matmul(E, Z.transpose())
+    test = test.transpose()
 
     k = best_k[1]
     print(f"\nPerform KNN to test set, K = {k}: ")
-    multiThreadedKNN(x=y, Y=train_set, x_labels=test_labels, y_labels=train_labels, k=k)
+    multiThreadedKNN(x=test, Y=train, x_labels=test_labels, y_labels=train_labels, k=k)

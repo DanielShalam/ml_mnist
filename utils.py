@@ -34,10 +34,10 @@ def computeCentroidsDist(digits, centroids):
     for first_digit in digits:
         for sec_digit in digits:
             if first_digit == sec_digit:
-                dist_matrix[first_digit][first_digit] = 0
+                dist_matrix[first_digit, first_digit] = 0
 
             # Euclidean distance
-            dist_matrix[first_digit][sec_digit] = math.sqrt(
+            dist_matrix[first_digit, sec_digit] = math.sqrt(
                 sum([(a - b) ** 2 for a, b in zip(centroids[first_digit], centroids[sec_digit])]))
 
     from tabulate import tabulate
